@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "644431086680",
+    "project_id": "meddis-1a8b1",
+    "storage_bucket": "meddis-1a8b1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:644431086680:android:0abf2fff373c4b386b362d",
+        "android_client_info": {
+          "package_name": "com.meddis"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "644431086680-roh61a6d4f1s5mipghpbpo76a3d6rlea.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC__SvYHIlUZBkI9koqByGLQf-yMklVNZ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "644431086680-roh61a6d4f1s5mipghpbpo76a3d6rlea.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

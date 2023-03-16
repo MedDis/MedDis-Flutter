@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.gsc">
+    package="com.meddis">
    <application
         android:label="gsc"
         android:name="${applicationName}"

@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:gsc/view_model/state/auth_provider.dart';
+import 'package:gsc/view_model/state/home_provider.dart';
 import 'package:gsc/views/home/home_view.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +17,9 @@ void main() async {
       providers: [
         ChangeNotifierProvider<AuthProvider>(
           create: (context) => AuthProvider(),
+        ),
+        ChangeNotifierProvider<HomeProvider>(
+          create: (context) => HomeProvider(),
         ),
       ],
       child: const MyApp(),

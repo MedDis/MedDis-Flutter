@@ -1,8 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:gsc/utils/colors.dart';
 import 'package:gsc/view_model/state/auth_provider.dart';
 import 'package:gsc/view_model/state/home_provider.dart';
-import 'package:gsc/views/home/home_view.dart';
+import 'package:gsc/view_model/state/main_provider.dart';
+import 'package:gsc/views/main_view.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
@@ -21,6 +23,9 @@ void main() async {
         ChangeNotifierProvider<HomeProvider>(
           create: (context) => HomeProvider(),
         ),
+        ChangeNotifierProvider<MainProvider>(
+          create: (context) => MainProvider(),
+        ),
       ],
       child: const MyApp(),
     ),
@@ -37,9 +42,13 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         useMaterial3: true,
-        primarySwatch: Colors.blue,
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: MyColors.primarymaterial,
+        ),
+
+        // primarySwatch: Colors.blue,
       ),
-      home: const HomeView(),
+      home: const MainView(),
     );
   }
 }

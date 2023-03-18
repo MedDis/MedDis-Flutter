@@ -1,12 +1,16 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:gsc/view_model/state/auth_provider.dart';
-import 'package:gsc/views/auth_accounts.dart';
+import 'package:gsc/views/home/home_view.dart';
 import 'package:provider/provider.dart';
+
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     MultiProvider(
       providers: [
@@ -28,9 +32,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+        useMaterial3: true,
         primarySwatch: Colors.blue,
       ),
-      home: const AuthAccount(),
+      home: const HomeView(),
     );
   }
 }

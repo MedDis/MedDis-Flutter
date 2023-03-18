@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
-class DictionaryView extends StatelessWidget {
-  const DictionaryView({super.key});
+class DictionaryScreen extends StatelessWidget {
+  const DictionaryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

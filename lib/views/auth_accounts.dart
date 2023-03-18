@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gsc/view_model/state/auth_provider.dart';
-import 'package:gsc/views/main_page.dart';
+import 'package:gsc/views/main_screen.dart';
 import 'package:provider/provider.dart';
 
-import 'login.dart';
+import 'auth/login_screen.dart';
 
 class AuthAccount extends StatelessWidget {
   const AuthAccount({Key? key}) : super(key: key);
@@ -27,13 +27,13 @@ class AuthAccount extends StatelessWidget {
           //   return const Text('Gagal');
           // }
 
-          return const MainPages();
+          return const MainScreen();
         } else if (snapshot.hasError) {
           return const Center(
             child: Text('Ada yang error!!'),
           );
         } else {
-          return const Login();
+          return const LoginScreen();
         }
       },
     );

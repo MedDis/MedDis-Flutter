@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:gsc/view_model/state/main_provider.dart';
 import 'package:provider/provider.dart';
 
-class MainView extends StatelessWidget {
-  const MainView({super.key});
+class MainScreen extends StatelessWidget {
+  const MainScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class PasswordField extends StatefulWidget {
   const PasswordField({
     Key? key,
     required this.controller,
-    this.title = 'Kata Sandi',
-    this.textHint = 'Masukkan Kata Sandi',
+    this.title = 'Password',
+    this.textHint = 'Enter your Password',
     this.passConfirmation,
   }) : super(key: key);
   final TextEditingController controller;
@@ -44,6 +43,7 @@ class _PasswordFieldState extends State<PasswordField> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Container(
       margin: const EdgeInsets.only(top: 10),
       child: Column(
@@ -51,67 +51,65 @@ class _PasswordFieldState extends State<PasswordField> {
         children: [
           Text(
             widget.title,
+            style: const TextStyle(fontWeight: FontWeight.w700),
           ),
           const SizedBox(
             height: 5,
           ),
-          Stack(
-            children: [
-              Container(
-                height: 50,
-                decoration: BoxDecoration(
-                  color: const Color(0xffE7F2FF),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              TextField(
-                controller: widget.controller,
-                obscureText: !showPassword,
-                onChanged: (text) {
-                  setState(() {
-                    int confirmation =
-                        widget.passConfirmation!.confirmationFunction(text);
-                    onError = confirmation == 0;
-                    errorText = widget.passConfirmation!.errorText;
-                    if (showPassBar) {
-                      change = !change;
-                      widget.passConfirmation!.reference!.data = text;
-                      if (text.isNotEmpty) {
-                        for (int i = 0; i < dataColors.length; i++) {
-                          if (i < confirmation) {
-                            // print('inhere');
-                            dataColors[i] = dataColorsValue[confirmation];
-                          } else {
-                            dataColors[i] = dataColorsValue[0];
-                          }
+          Card(
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            elevation: 3,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+            child: TextFormField(
+              controller: widget.controller,
+              obscureText: !showPassword,
+              onChanged: (text) {
+                setState(() {
+                  int confirmation =
+                      widget.passConfirmation!.confirmationFunction(text);
+                  onError = confirmation == 0;
+                  errorText = widget.passConfirmation!.errorText;
+                  if (showPassBar) {
+                    change = !change;
+                    widget.passConfirmation!.reference!.data = text;
+                    if (text.isNotEmpty) {
+                      for (int i = 0; i < dataColors.length; i++) {
+                        if (i < confirmation) {
+                          // print('inhere');
+                          dataColors[i] = dataColorsValue[confirmation];
+                        } else {
+                          dataColors[i] = dataColorsValue[0];
                         }
                       }
                     }
-                  });
-                },
-                // style: titleSmall,
-                decoration: InputDecoration(
-                  hintText: widget.textHint,
-                  // hintStyle: hintTitle,
-                  contentPadding: const EdgeInsets.only(
-                      top: 13, bottom: 12, left: 15, right: 15),
-                  isDense: true,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide.none,
-                  ),
-                  suffixIcon: GestureDetector(
-                    onTap: () => setState(() {
-                      showPassword = !showPassword;
-                    }),
-                    child: Icon(
-                      !showPassword ? Icons.visibility : Icons.visibility_off,
-                      // color: primaryColor,
-                    ),
+                  }
+                });
+              },
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                hintText: widget.textHint,
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: size.height * 7 / 400,
+                  horizontal: size.width * 1 / 22,
+                ),
+                isDense: true,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide.none,
+                ),
+                suffixIcon: GestureDetector(
+                  onTap: () => setState(() {
+                    showPassword = !showPassword;
+                  }),
+                  child: Icon(
+                    !showPassword ? Icons.visibility : Icons.visibility_off,
+                    // color: primaryColor,
                   ),
                 ),
               ),
-            ],
+            ),
           ),
           showPassBar
               ? Container(

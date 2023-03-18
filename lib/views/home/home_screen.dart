@@ -5,8 +5,8 @@ import 'package:gsc/views/home/widget/list_new_cards.dart';
 import 'package:gsc/views/home/widget/menu_cards.dart';
 import 'package:provider/provider.dart';
 
-class HomeView extends StatelessWidget {
-  const HomeView({super.key});
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

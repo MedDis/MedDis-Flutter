@@ -4,7 +4,7 @@ import 'package:gsc/utils/colors.dart';
 import 'package:gsc/view_model/state/auth_provider.dart';
 import 'package:gsc/view_model/state/home_provider.dart';
 import 'package:gsc/view_model/state/main_provider.dart';
-import 'package:gsc/views/main_view.dart';
+import 'package:gsc/views/auth_accounts.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
 
         // primarySwatch: Colors.blue,
       ),
-      home: const MainView(),
+      home: const AuthAccount(),
     );
   }
 }

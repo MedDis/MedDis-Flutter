@@ -16,7 +16,7 @@ class FullButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50,
+      height: 55,
       width: double.infinity,
       margin: EdgeInsets.only(top: marginTop, bottom: marginBottom),
       child: TextButton(
@@ -24,7 +24,7 @@ class FullButton extends StatelessWidget {
         style: TextButton.styleFrom(
           backgroundColor: Colors.teal,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24),
+            borderRadius: BorderRadius.circular(40),
           ),
         ),
         child: Text(

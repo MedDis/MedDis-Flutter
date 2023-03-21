@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gsc/utils/colors.dart';
+import 'package:gsc/utils/finite_state.dart';
+import 'package:gsc/view_model/state/auth_provider.dart';
+import 'package:gsc/views/auth/login_screen.dart';
 import 'package:gsc/views/auth/widget/password_field.dart';
 import 'package:gsc/views/auth/widget/text_input.dart';
 import 'package:gsc/views/auth/widget/full_button.dart';
+import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -68,32 +72,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               PasswordField(
                 controller: controller[2],
-                passConfirmation: NoneConfirmation(),
+                passConfirmation: StrengthPassword(),
               ),
               PasswordField(
                 title: 'Confirm Password',
                 controller: controller[3],
-                passConfirmation: NoneConfirmation(),
+                passConfirmation: SamePassword(
+                    reference: Reference(data: controller[2].text)),
               ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: () {},
-                  child: const Text("Forgot Password?"),
-                ),
-              ),
-              // SizedBox(
-              //   height: size.height * 0.02,
-              // ),
-              FullButton(
-                text: "Register",
-                onPressed: () {
-                  // context
-                  //     .read<AuthProvider>()
-                  //     // .signInMailPass('demo@mail.com', 'Demo123');
-                  //     .signInMailPass(controller[0].text, controller[1].text);
-                },
-              ),
+              Consumer<AuthProvider>(builder: (context, data, _) {
+                if (data.actionState == StateAction.loading) {
+                  return const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 25),
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  return FullButton(
+                    text: "Register",
+                    onPressed: () async {
+                      logicButtonRegister();
+                    },
+                  );
+                }
+              }),
               const Spacer(
                 flex: 2,
               ),
@@ -102,7 +103,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 children: [
                   const Text("Do not have an account?"),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                          builder: (context) => const LoginScreen(),
+                        ),
+                        (route) => false,
+                      );
+                    },
                     child: Text(
                       "Sign Up",
                       style: TextStyle(
@@ -118,5 +126,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
     );
+  }
+
+  void logicButtonRegister() async {
+    final prov = Provider.of<AuthProvider>(context, listen: false);
+    final result = await prov.signUp(
+      controller[0].text,
+      controller[1].text,
+      controller[2].text,
+    );
+    if (!mounted) return;
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(prov.registerMessage)));
+    if (result == true) {
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => const LoginScreen(),
+        ),
+        (route) => false,
+      );
+    }
   }
 }

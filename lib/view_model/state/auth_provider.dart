@@ -1,13 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:gsc/utils/finite_state.dart';
 
-class AuthProvider with ChangeNotifier {
+class AuthProvider with ChangeNotifier, FiniteState {
   final googleSignIn = GoogleSignIn();
-
+  String? _registerMessage;
   UserCredential? user;
   User? userData;
   bool isNormalLogin = false;
+
+  String get registerMessage => _registerMessage!;
 
   Future reloadState() async {
     FirebaseAuth.instance.authStateChanges();
@@ -32,13 +35,19 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future signInMailPass(String email, String pass) async {
-    user = await FirebaseAuth.instance
-        .signInWithEmailAndPassword(email: email, password: pass);
+    setStateAction(StateAction.loading);
+    try {
+      user = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: pass);
+      // print(user!.user!.displayName);
 
-    print(user!.user!.displayName);
+      isNormalLogin = true;
+      userData = user!.user;
+      setStateAction(StateAction.none);
+    } catch (e) {
+      setStateAction(StateAction.none);
+    }
 
-    isNormalLogin = true;
-    userData = user!.user;
     notifyListeners();
   }
 
@@ -63,7 +72,9 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future signUp(String name, String email, String pass) async {
+  Future<bool> signUp(String name, String email, String pass) async {
+    setStateAction(StateAction.loading);
+    _registerMessage = '';
     try {
       user = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: pass);
@@ -71,10 +82,15 @@ class AuthProvider with ChangeNotifier {
       isNormalLogin = true;
       userData = user!.user;
       // print('cekBro : ${userData!.emailVerified}');
-      userData!.sendEmailVerification();
+      await userData!.sendEmailVerification();
+      _registerMessage = "We have sent a verification link to $email";
+      setStateAction(StateAction.none);
       // userData?.updateDisplayName(name);
+      return true;
     } on FirebaseAuthException catch (e) {
-      print(e.code);
+      _registerMessage = "${e.message}";
+      setStateAction(StateAction.error);
+      return false;
     }
   }
 

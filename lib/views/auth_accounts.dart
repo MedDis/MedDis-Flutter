@@ -26,7 +26,6 @@ class AuthAccount extends StatelessWidget {
           //   // context.read<AuthProvider>().logOut();
           //   return const Text('Gagal');
           // }
-
           return const MainScreen();
         } else if (snapshot.hasError) {
           return const Center(

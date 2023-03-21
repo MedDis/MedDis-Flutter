@@ -34,6 +34,10 @@ class TextInput extends StatelessWidget {
             height: 5,
           ),
           Card(
+            margin: const EdgeInsets.symmetric(
+              horizontal: 0,
+              vertical: 4,
+            ),
             elevation: 3,
             clipBehavior: Clip.antiAliasWithSaveLayer,
             shape:

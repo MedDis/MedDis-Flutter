@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gsc/utils/colors.dart';
+import 'package:gsc/utils/finite_state.dart';
 import 'package:gsc/view_model/state/auth_provider.dart';
 import 'package:gsc/views/auth/register_screen.dart';
 import 'package:gsc/views/auth/widget/password_field.dart';
@@ -77,15 +78,24 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 height: size.height * 0.02,
               ),
-              FullButton(
-                text: "Login",
-                onPressed: () {
-                  context
-                      .read<AuthProvider>()
-                      // .signInMailPass('demo@mail.com', 'Demo123');
-                      .signInMailPass(controller[0].text, controller[1].text);
-                },
-              ),
+              Consumer<AuthProvider>(builder: (context, data, _) {
+                if (data.actionState == StateAction.loading) {
+                  return const Padding(
+                      padding: EdgeInsets.only(top: 29, bottom: 29),
+                      child: CircularProgressIndicator());
+                } else {
+                  return FullButton(
+                    text: "Login",
+                    onPressed: () {
+                      context
+                          .read<AuthProvider>()
+                          // .signInMailPass('demo@mail.com', 'Demo123');
+                          .signInMailPass(
+                              controller[0].text, controller[1].text);
+                    },
+                  );
+                }
+              }),
               const Text("OR"),
               const GoogleButton(
                 buttonName: 'Login',

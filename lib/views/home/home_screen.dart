@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gsc/view_model/state/home_provider.dart';
+import 'package:gsc/views/composition/composition_view.dart';
 import 'package:gsc/views/home/widget/empty_card.dart';
 import 'package:gsc/views/home/widget/list_new_cards.dart';
 import 'package:gsc/views/home/widget/menu_cards.dart';
@@ -106,7 +107,14 @@ class HomeScreen extends StatelessWidget {
           const SizedBox(
             height: 12,
           ),
-          const MenuCards(
+          MenuCards(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const CompositionView(),
+                ),
+              );
+            },
             images: "assets/images/compotition_image.png",
             title: "Composition",
           ),

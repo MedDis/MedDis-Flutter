@@ -1,36 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:gsc/utils/colors.dart';
 
 class FullButton extends StatelessWidget {
-  const FullButton(
-      {Key? key,
-      this.onPressed,
-      this.text = 'Button',
-      this.marginTop = 25,
-      this.marginBottom = 15})
-      : super(key: key);
+  const FullButton({
+    Key? key,
+    this.onPressed,
+    this.height = 55,
+    this.width = double.infinity,
+    this.text = 'Button',
+    this.marginTop = 25,
+    this.marginBottom = 15,
+    this.secondaryColor = false,
+  }) : super(key: key);
   final Function()? onPressed;
+  final double height;
+  final double width;
   final String text;
   final double marginTop;
   final double marginBottom;
+  final bool secondaryColor;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 55,
-      width: double.infinity,
+      height: height,
+      width: width,
       margin: EdgeInsets.only(top: marginTop, bottom: marginBottom),
-      child: TextButton(
+      child: ElevatedButton(
         onPressed: onPressed,
-        style: TextButton.styleFrom(
-          backgroundColor: Colors.teal,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: secondaryColor ? Colors.white : Colors.teal,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(40),
           ),
         ),
         child: Text(
           text,
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: secondaryColor ? primary : Colors.white,
           ),
         ),
       ),

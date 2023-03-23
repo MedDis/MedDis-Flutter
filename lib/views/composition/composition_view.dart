@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gsc/view_model/state/composition_provider.dart';
 import 'package:gsc/views/auth/widget/full_button.dart';
+import 'package:gsc/views/composition/composition_output.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -31,7 +32,7 @@ class CompositionView extends StatelessWidget {
               text: "Scan with Gallery",
             ),
             FullButton(
-              onPressed: () {
+              onPressed: () async {
                 logicButton(context, isCamera: true);
               },
               text: "Scan with Camera",
@@ -49,11 +50,18 @@ class CompositionView extends StatelessWidget {
         .then((value) => {
               if (value != '')
                 {
-                  prov.imageCropperView(context, value).then((value) {
-                    if (value != '') {
-                      prov.processImage(value);
-                    }
-                  })
+                  prov.imageCropperView(context, value).then(
+                    (value) {
+                      if (value != '') {
+                        prov.processImage(value);
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const CompositionOutput(),
+                          ),
+                        );
+                      }
+                    },
+                  )
                 }
             });
   }

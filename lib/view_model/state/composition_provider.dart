@@ -15,7 +15,7 @@ class CompositionProvider with ChangeNotifier, FiniteState {
   List<String> _processedData = [];
   List<String> dummyData = ["Chrom", "paractmol"];
 
-  List<String> get processedData => _processedData;
+  List<String?> get processedData => _processedData;
 
   Future<String> pickImage({ImageSource? image}) async {
     final picker = ImagePicker();
@@ -62,7 +62,6 @@ class CompositionProvider with ChangeNotifier, FiniteState {
     );
 
     if (croppedFile != null) {
-      print(croppedFile.path);
       return croppedFile.path;
     } else {
       return '';
@@ -73,48 +72,86 @@ class CompositionProvider with ChangeNotifier, FiniteState {
     final InputImage inputImage = InputImage.fromFilePath(path);
     final textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
     _processedData.clear();
-    final dataFromAsset = await loadAsset();
+
+    List<String> wordsAfterCheckUnnecessary = [];
+    // Load data all drugs from assets
+    final dataFromAsset = await loadAsset("assets/drugs.txt");
+    final dataUnnecessaryWords =
+        await loadAsset("assets/unnecessary_words.txt");
 
     setStateAction(StateAction.loading);
     try {
+      // Text Recognizer (OCR)
       final RecognizedText recognizedText =
           await textRecognizer.processImage(inputImage);
       data = recognizedText.text;
-      // print(data);
-      // final splitData = data.split(' ');
-      // print(splitData);
+
+      // Line Split
       LineSplitter ls = const LineSplitter();
       List<String> lines = ls.convert(data);
-      // print(lines[1]);
-      // print("lines: $lines");
 
-      final resultCheckSimilarity = lines.map(
-        (e) async {
-          final a = checkSimilarity(e, dataFromAsset);
+      // Check unnecessary words
+      Iterable<Future<void>> resultUnnecessaryWords = lines.map(
+        (drug) async {
+          final a = checkUnnecessaryWords(drug, dataUnnecessaryWords);
+          if (a != '') {
+            wordsAfterCheckUnnecessary.add(a);
+          }
+        },
+      );
+
+      // Waiting for the check of unnecessary words.
+      Future<List<void>> futureListUnncessaryWords =
+          Future.wait(resultUnnecessaryWords);
+      await futureListUnncessaryWords;
+
+      // Check Similarity with FuzzyWuzzy
+      Iterable<Future<String>> resultCheckSimilarity =
+          wordsAfterCheckUnnecessary.map(
+        (drug) async {
+          final a = checkSimilarity(drug, dataFromAsset);
           return a;
         },
       );
       Future<List<String>> futureList = Future.wait(resultCheckSimilarity);
       _processedData = await futureList;
-      // print(_processedData);
       await Future.delayed(const Duration(seconds: 2));
       setStateAction(StateAction.none);
     } catch (e) {
-      // print(e);
       setStateAction(StateAction.error);
     }
     notifyListeners();
   }
 
+  String checkUnnecessaryWords(String drug, List<String> dataUnnecessaryWords) {
+    // Fuzzywuzzy with unnecessary words
+    ExtractedResult<String> result = extractOne(
+      query: drug,
+      choices: dataUnnecessaryWords,
+      cutoff: 10,
+    );
+
+    // A condition where unnecessary words are found
+    if (result.score <= 80) {
+      return drug;
+    } else {
+      return '';
+    }
+  }
+
   String checkSimilarity(String drug, List<String> dataFromAsset) {
     List multipleWords = drug.split(' ');
+
+    // Fuzzywuzzy with top 20
     List<ExtractedResult<String>> result = extractTop(
       query: drug,
       choices: dataFromAsset,
       cutoff: 10,
       limit: 20,
     )..map((e) => _similarDrug.add(e.choice)).toList();
+    // Condition if drug words has multiple word
     if (multipleWords.length == 2 && result[0].score <= 90) {
+      // Second check similarity with fuzzy wuzzy
       final dataDoubleString = checkDoubleString(drug);
       return dataDoubleString;
     } else {
@@ -122,9 +159,8 @@ class CompositionProvider with ChangeNotifier, FiniteState {
     }
   }
 
-  Future<List<String>> loadAsset() async {
-    String data = await rootBundle.loadString('assets/drugs.txt');
-    // print(splitData);
+  Future<List<String>> loadAsset(String assets) async {
+    String data = await rootBundle.loadString(assets);
     LineSplitter textLineSplitter = const LineSplitter();
     List<String> lines = textLineSplitter.convert(data);
     return lines;

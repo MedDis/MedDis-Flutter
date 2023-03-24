@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gsc/utils/colors.dart';
 import 'package:gsc/view_model/state/auth_provider.dart';
 import 'package:gsc/view_model/state/composition_provider.dart';
+import 'package:gsc/view_model/state/dictionary_provider.dart';
 import 'package:gsc/view_model/state/home_provider.dart';
 import 'package:gsc/view_model/state/main_provider.dart';
 import 'package:gsc/views/auth_accounts.dart';
@@ -29,6 +30,9 @@ void main() async {
         ),
         ChangeNotifierProvider<CompositionProvider>(
           create: (context) => CompositionProvider(),
+        ),
+        ChangeNotifierProvider<DictionaryProvider>(
+          create: (context) => DictionaryProvider(),
         ),
       ],
       child: const MyApp(),

@@ -5,8 +5,8 @@ import 'package:gsc/views/composition/composition_output.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-class CompositionView extends StatelessWidget {
-  const CompositionView({super.key});
+class CompositionScreen extends StatelessWidget {
+  const CompositionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

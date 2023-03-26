@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gsc/view_model/state/home_provider.dart';
-import 'package:gsc/views/composition/composition_view.dart';
+import 'package:gsc/views/composition/composition_screen.dart';
 import 'package:gsc/views/home/widget/empty_card.dart';
 import 'package:gsc/views/home/widget/list_new_cards.dart';
 import 'package:gsc/views/home/widget/menu_cards.dart';
+import 'package:gsc/views/human_body/human_body_screen.dart';
 import 'package:gsc/widgets/custom_search_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -73,23 +74,43 @@ class HomeScreen extends StatelessWidget {
           const SizedBox(
             height: 12,
           ),
-          MenuCards(
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const CompositionView(),
-                ),
-              );
-            },
-            images: "assets/images/compotition_image.png",
-            title: "Composition",
-          ),
-          const SizedBox(
-            height: 12,
-          ),
-          const MenuCards(
-            images: "assets/images/complaint_image.png",
-            title: "Complaint",
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  MenuCards(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const CompositionScreen(),
+                        ),
+                      );
+                    },
+                    images: "assets/images/compotition_image.png",
+                    title: "Composition",
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  const MenuCards(
+                    images: "assets/images/complaint_image.png",
+                    title: "Complaint",
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  MenuCards(
+                    images: "assets/images/complaint_image.png",
+                    title: "Human Body",
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const HumanBodyScreen(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),

@@ -43,6 +43,7 @@ class AuthProvider with ChangeNotifier, FiniteState {
 
       isNormalLogin = true;
       userData = user!.user;
+      print("jalan");
       setStateAction(StateAction.none);
     } catch (e) {
       setStateAction(StateAction.none);

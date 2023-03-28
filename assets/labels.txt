@@ -1,0 +1,9 @@
+Actinic_keratosis
+Basal Cell Carcinoma
+Chickenpox
+Dermatofibroma
+Eczema
+Melanoma
+Ringworm
+Squamous_cell_carcinoma
+Urticaria

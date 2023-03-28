@@ -1,15 +1,14 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:gsc/utils/colors.dart';
 import 'package:gsc/view_model/state/auth_provider.dart';
+import 'package:gsc/view_model/state/classifier_provider.dart';
 import 'package:gsc/view_model/state/composition_provider.dart';
 import 'package:gsc/view_model/state/dictionary_provider.dart';
 import 'package:gsc/view_model/state/home_provider.dart';
 import 'package:gsc/view_model/state/human_body_provider.dart';
 import 'package:gsc/view_model/state/main_provider.dart';
 import 'package:gsc/views/auth_accounts.dart';
-import 'package:gsc/views/human_body/human_body_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
@@ -39,6 +38,9 @@ void main() async {
         ),
         ChangeNotifierProvider<HumanBodyProvider>(
           create: (context) => HumanBodyProvider(),
+        ),
+        ChangeNotifierProvider<ClassifierProvider>(
+          create: (context) => ClassifierProvider(),
         ),
       ],
       child: const MyApp(),

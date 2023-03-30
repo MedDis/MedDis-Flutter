@@ -1,11 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:gsc/models/tensorflow_model.dart';
 import 'package:gsc/view_model/state/classifier_provider.dart';
+import 'package:gsc/view_model/state/composition_provider.dart';
 import 'package:gsc/view_model/state/home_provider.dart';
 import 'package:gsc/views/auth/widget/full_button.dart';
-import 'package:gsc/views/composition/composition_screen.dart';
+import 'package:gsc/views/composition/composition_output.dart';
 import 'package:gsc/views/disease/disease_screen.dart';
 import 'package:gsc/views/home/widget/empty_card.dart';
 import 'package:gsc/views/home/widget/list_new_cards.dart';
@@ -17,6 +19,11 @@ import 'package:provider/provider.dart';
 import 'package:image/image.dart' as img;
 import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
 
+enum CardEnums {
+  composition,
+  skinDisease,
+}
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -25,7 +32,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  void showAlertDialog() {
+  void showAlertDialog(CardEnums cardEnums) {
     showDialog(
       context: context,
       builder: (context) {
@@ -45,7 +52,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   marginBottom: 0,
                   width: size.width * 0.58,
                   height: 40,
-                  onPressed: () {},
+                  onPressed: () {
+                    if (cardEnums == CardEnums.composition) {
+                      logicButtonComposition(isCamera: true);
+                    } else {
+                      logicButtonSkinDisease(isCamera: true);
+                    }
+                  },
                   text: "Scan with Camera",
                 ),
                 FullButton(
@@ -55,7 +68,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 40,
                   secondaryColor: true,
                   onPressed: () {
-                    logicButtonSkinDisease();
+                    if (cardEnums == CardEnums.composition) {
+                      logicButtonComposition(isCamera: false);
+                    } else {
+                      logicButtonSkinDisease(isCamera: false);
+                    }
                   },
                   text: "Scan with Gallery",
                 ),
@@ -132,55 +149,83 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(
               height: 12,
             ),
-            Column(
-              children: [
-                MenuCards(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const CompositionScreen(),
-                      ),
-                    );
-                  },
-                  images: "assets/images/compotition_image.png",
-                  title: "Composition",
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                const MenuCards(
-                  images: "assets/images/complaint_image.png",
-                  title: "Complaint",
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                MenuCards(
-                  images: "assets/images/complaint_image.png",
-                  title: "Human Body",
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const HumanBodyScreen(),
+            Padding(
+                padding: EdgeInsets.symmetric(horizontal: size.width * 1 / 16),
+                child: LayoutGrid(
+                  columnSizes: [1.fr, 1.fr],
+                  rowSizes: const [auto, auto],
+                  rowGap: 8,
+                  columnGap: 8,
+                  children: [
+                    MenuCards(
+                      onTap: () {
+                        // Navigator.of(context).push(
+                        //   MaterialPageRoute(
+                        //     builder: (context) => const CompositionScreen(),
+                        //   ),
+                        // );
+                        showAlertDialog(CardEnums.composition);
+                      },
+                      title: "Composition",
+                      images: "assets/images/composition_card.png",
                     ),
-                  ),
-                ),
-                MenuCards(
-                  images: "assets/images/complaint_image.png",
-                  title: "Skin Disease",
-                  onTap: () {
-                    showAlertDialog();
-                  },
-                ),
-              ],
-            ),
+                    MenuCards(
+                      onTap: () {},
+                      isPrimaryColors: false,
+                      title: "Complaint",
+                      images: "assets/images/complaint_card.png",
+                    ),
+                    MenuCards(
+                      isPrimaryColors: false,
+                      title: "Skin Disease",
+                      images: "assets/images/complaint_card.png",
+                      onTap: () {
+                        showAlertDialog(CardEnums.skinDisease);
+                      },
+                    ),
+                    MenuCards(
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const HumanBodyScreen(),
+                        ),
+                      ),
+                      title: "Human Body",
+                      images: "assets/images/composition_card.png",
+                    ),
+                  ],
+                ))
           ],
         ),
       ),
     );
   }
 
-  void logicButtonSkinDisease() {
-    pickImage().then((path) async {
+  void logicButtonComposition({required bool isCamera}) {
+    final prov = Provider.of<CompositionProvider>(context, listen: false);
+    prov
+        .pickImage(image: isCamera ? ImageSource.camera : ImageSource.gallery)
+        .then((value) => {
+              if (value != '')
+                {
+                  prov.imageCropperView(context, value).then(
+                    (value) {
+                      if (value != '') {
+                        prov.processImage(value);
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const CompositionOutput(),
+                          ),
+                        );
+                      }
+                    },
+                  )
+                }
+            });
+  }
+
+  void logicButtonSkinDisease({required bool isCamera}) {
+    pickImage(imageSource: isCamera ? ImageSource.camera : ImageSource.gallery)
+        .then((path) async {
       if (path != '') {
         final prov = Provider.of<ClassifierProvider>(context, listen: false);
         // Load Labels
@@ -216,22 +261,23 @@ class _HomeScreenState extends State<HomeScreen> {
             prov.predict(inputImage, model, listData);
 
         if (!mounted) return;
-        Navigator.of(context).push(
+        Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => DiseaseScreen(predictData: topResult),
+            builder: (context) =>
+                DiseaseScreen(path: path, predictData: topResult),
           ),
         );
       }
     });
   }
 
-  Future<String> pickImage() async {
+  Future<String> pickImage({required ImageSource? imageSource}) async {
     final ImagePicker picker = ImagePicker();
     String path = '';
 
     try {
       final XFile? pickedFile = await picker.pickImage(
-        source: ImageSource.gallery,
+        source: imageSource!,
       );
       if (pickedFile != null) {
         path = pickedFile.path;

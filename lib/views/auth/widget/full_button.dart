@@ -11,6 +11,7 @@ class FullButton extends StatelessWidget {
     this.marginTop = 25,
     this.marginBottom = 15,
     this.secondaryColor = false,
+    this.shape = 40,
   }) : super(key: key);
   final Function()? onPressed;
   final double height;
@@ -19,6 +20,7 @@ class FullButton extends StatelessWidget {
   final double marginTop;
   final double marginBottom;
   final bool secondaryColor;
+  final double shape;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class FullButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: secondaryColor ? Colors.white : Colors.teal,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(40),
+            borderRadius: BorderRadius.circular(shape),
           ),
         ),
         child: Text(

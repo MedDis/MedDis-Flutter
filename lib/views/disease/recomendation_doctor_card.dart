@@ -2,55 +2,57 @@
 import 'package:flutter/material.dart';
 
 import 'package:gsc/models/doctor_model.dart';
+import 'package:gsc/utils/colors.dart';
 
 class RecomendationDoctorCard extends StatelessWidget {
   const RecomendationDoctorCard({
     Key? key,
-    required this.doctorData,
+    required this.dataDoctor,
   }) : super(key: key);
-  final List<DoctorModel> doctorData;
+  final DoctorModel dataDoctor;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: List.generate(
-        doctorData.length <= 3 ? doctorData.length : 3,
-        (index) => Card(
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          child: Container(
-            color: Colors.white,
-            child: Row(
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                  child: Container(
-                    width: 60.0,
-                    height: 60.0,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: NetworkImage(doctorData[index].image)),
-                      color: Colors.white,
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(16.0)),
-                    ),
-                  ),
+    return Card(
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      child: Container(
+        color: primary,
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              child: Container(
+                width: 60.0,
+                height: 60.0,
+                decoration: BoxDecoration(
+                  image: DecorationImage(image: NetworkImage(dataDoctor.image)),
+                  color: Colors.white,
+                  borderRadius: const BorderRadius.all(Radius.circular(16.0)),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      doctorData[index].name,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w700, fontSize: 18),
-                    ),
-                    Text(doctorData[index].specialist),
-                    Text(doctorData[index].hospital)
-                  ],
+              ),
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  dataDoctor.name,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 18,
+                      color: Colors.white),
+                ),
+                Text(
+                  dataDoctor.specialist,
+                  style: const TextStyle(color: Colors.white),
+                ),
+                Text(
+                  dataDoctor.hospital,
+                  style: const TextStyle(color: Colors.white),
                 )
               ],
-            ),
-          ),
+            )
+          ],
         ),
       ),
     );

@@ -7,24 +7,21 @@ import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
 import 'package:image/image.dart' as img;
 
 class ClassifierProvider with ChangeNotifier {
-  final int _labelsLength = 9;
-  String labelAssets = "assets/labels.txt";
+  // String labelAssets = "assets/labels.txt";
   String model = "skinDisease.tflite";
-  late List<String> _labels;
+  // late List<String> _labels;
 
-  Future<List<String>> loadLabels() async {
-    // Loads the labels using the file utility from tflite_flutter_helper.
-    final rawLabels = await FileUtil.loadLabels(labelAssets);
-
-    if (rawLabels.length == _labelsLength) {
-      debugPrint('Labels loaded successfully');
-    } else {
-      debugPrint('Unable to load labels');
-    }
-
-    _labels = rawLabels;
-    return rawLabels;
-  }
+  final List<String> _labels = [
+    "Actinic Keratosis",
+    "Basal Cell Carcinoma",
+    "Chickenpox",
+    "Dermatofibroma",
+    "Eczema",
+    "Melanoma",
+    "Ringworm",
+    "Squamous Cell Carcinoma",
+    "Urticaria"
+  ];
 
   Future<ClassifierModel> loadModel() async {
     // Creates an interpreter with the provided model file.

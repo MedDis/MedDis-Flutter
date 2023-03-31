@@ -5,18 +5,19 @@ import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:gsc/models/tensorflow_model.dart';
 import 'package:gsc/view_model/state/classifier_provider.dart';
 import 'package:gsc/view_model/state/composition_provider.dart';
-import 'package:gsc/view_model/state/home_provider.dart';
+import 'package:gsc/view_model/state/disease_provider.dart';
 import 'package:gsc/views/auth/widget/full_button.dart';
 import 'package:gsc/views/composition/composition_output.dart';
 import 'package:gsc/views/disease/disease_screen.dart';
-import 'package:gsc/views/home/widget/empty_card.dart';
-import 'package:gsc/views/home/widget/list_new_cards.dart';
+import 'package:gsc/views/disease/recomendation_doctor_card.dart';
+import 'package:gsc/views/doctor/doctor_view.dart';
 import 'package:gsc/views/home/widget/menu_cards.dart';
 import 'package:gsc/views/human_body/human_body_screen.dart';
 import 'package:gsc/widgets/custom_search_bar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:image/image.dart' as img;
+import 'package:swipeable_card_stack/swipeable_card_stack.dart';
 import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
 
 enum CardEnums {
@@ -32,6 +33,30 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final SwipeableCardSectionController _cardController =
+      SwipeableCardSectionController();
+
+  // List<Widget> dataDoctor = [
+  //   const SizedBox(
+  //     height: 300,
+  //     child: Card(
+  //       child: Text("Card 1"),
+  //     ),
+  //   ),
+  //   const SizedBox(
+  //     height: 300,
+  //     child: Card(
+  //       child: Text("Card 2"),
+  //     ),
+  //   ),
+  //   const SizedBox(
+  //     height: 300,
+  //     child: Card(
+  //       child: Text("Card 3"),
+  //     ),
+  //   ),
+  // ];
+
   void showAlertDialog(CardEnums cardEnums) {
     showDialog(
       context: context,
@@ -87,14 +112,39 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final prov = Provider.of<DiseaseProvider>(context);
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
-        title: const Text(
-          "MedDis",
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.w700,
+        title:
+            // Text(
+            //   "MedDis",
+            //   style: TextStyle(
+            //     fontSize: 24,
+            //     fontWeight: FontWeight.w700,
+            //   ),
+            // ),
+            SizedBox(
+          height: 200,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                "assets/images/meddis_logo.png",
+                fit: BoxFit.fitHeight,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              const Text(
+                "MedDis",
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700,
+                  // color: primary
+                ),
+              ),
+            ],
           ),
         ),
         shadowColor: Colors.black,
@@ -109,30 +159,50 @@ class _HomeScreenState extends State<HomeScreen> {
               child: const CustomSearchBar(),
             ),
             const SizedBox(
-              height: 18,
+              height: 4,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: size.width * 1 / 16),
-              child: const Text(
-                "News",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                ),
+            SizedBox(
+              height: 160,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SwipeableCardsSection(
+                    cardController: _cardController,
+                    context: context,
+                    items: List.generate(
+                      3,
+                      (index) => InkWell(
+                        onTap: () =>
+                            Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => DoctorView(
+                            dataDoctor: prov.listDoctor[index],
+                          ),
+                        )),
+                        child: RecomendationDoctorCard(
+                          dataDoctor: prov.listDoctor[index],
+                        ),
+                      ),
+                    ),
+                    cardHeightTopMul: 0.14,
+                    cardHeightMiddleMul: 0.09,
+                    cardHeightBottomMul: 0.1,
+                    enableSwipeUp: true,
+                    enableSwipeDown: false,
+                    onCardSwiped: (dir, index, widget) {
+                      _cardController.addItem(
+                        RecomendationDoctorCard(
+                          dataDoctor: prov.listDoctor[index % 3],
+                        ),
+                      );
+
+                      //Take action on the swiped widget based on the direction of swipe
+                      //Return false to not animate cards
+                    },
+                  ),
+                ],
               ),
             ),
-            const SizedBox(
-              height: 12,
-            ),
-            Consumer<HomeProvider>(builder: (contex, data, _) {
-              if (data.dataCards.isNotEmpty) {
-                return ListNewCards(
-                  dataCards: data.dataCards,
-                );
-              } else {
-                return const EmptyCard();
-              }
-            }),
             const SizedBox(
               height: 18,
             ),
@@ -159,29 +229,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     MenuCards(
                       onTap: () {
-                        // Navigator.of(context).push(
-                        //   MaterialPageRoute(
-                        //     builder: (context) => const CompositionScreen(),
-                        //   ),
-                        // );
                         showAlertDialog(CardEnums.composition);
                       },
                       title: "Composition",
                       images: "assets/images/composition_card.png",
-                    ),
-                    MenuCards(
-                      onTap: () {},
-                      isPrimaryColors: false,
-                      title: "Complaint",
-                      images: "assets/images/complaint_card.png",
-                    ),
-                    MenuCards(
-                      isPrimaryColors: false,
-                      title: "Skin Disease",
-                      images: "assets/images/complaint_card.png",
-                      onTap: () {
-                        showAlertDialog(CardEnums.skinDisease);
-                      },
                     ),
                     MenuCards(
                       onTap: () => Navigator.of(context).push(
@@ -189,8 +240,22 @@ class _HomeScreenState extends State<HomeScreen> {
                           builder: (context) => const HumanBodyScreen(),
                         ),
                       ),
+                      isPrimaryColors: false,
                       title: "Human Body",
-                      images: "assets/images/composition_card.png",
+                      images: "assets/images/human_body_card.png",
+                    ),
+                    MenuCards(
+                      onTap: () {},
+                      isPrimaryColors: false,
+                      title: "Med Bot",
+                      images: "assets/images/med_bot_card.png",
+                    ),
+                    MenuCards(
+                      onTap: () {
+                        showAlertDialog(CardEnums.skinDisease);
+                      },
+                      title: "Skin Disease",
+                      images: "assets/images/skin_disease_card.png",
                     ),
                   ],
                 ))
@@ -225,50 +290,58 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void logicButtonSkinDisease({required bool isCamera}) {
     pickImage(imageSource: isCamera ? ImageSource.camera : ImageSource.gallery)
-        .then((path) async {
-      if (path != '') {
-        final prov = Provider.of<ClassifierProvider>(context, listen: false);
-        // Load Labels
-        await prov.loadLabels();
+        .then(
+      (path) async {
+        if (path != '') {
+          final prov = Provider.of<ClassifierProvider>(context, listen: false);
 
-        // Load Model
-        final model = await prov.loadModel();
+          // Load Model
+          final model = await prov.loadModel();
 
-        //Load preprocessInput
-        File iniFile = File(path);
-        img.Image image = img.decodeImage(iniFile.readAsBytesSync())!;
-        TensorImage inputImage = prov.preProcessInput(image, model);
+          //Load preprocessInput
+          File iniFile = File(path);
+          img.Image image = img.decodeImage(iniFile.readAsBytesSync())!;
+          TensorImage inputImage = prov.preProcessInput(image, model);
 
-        debugPrint(
-          'Pre-processed image: ${inputImage.width}x${image.height}, '
-          'size: ${inputImage.buffer.lengthInBytes} bytes',
-        );
+          debugPrint(
+            'Pre-processed image: ${inputImage.width}x${image.height}, '
+            'size: ${inputImage.buffer.lengthInBytes} bytes',
+          );
 
-        final outputBuffer = TensorBuffer.createFixedSize(
-          model.outputShape,
-          model.outputType,
-        );
+          final outputBuffer = TensorBuffer.createFixedSize(
+            model.outputShape,
+            model.outputType,
+          );
 
-        model.interpreter.run(inputImage.buffer, outputBuffer.buffer);
-        debugPrint('OutputBuffer: ${outputBuffer.getDoubleList()}');
+          model.interpreter.run(inputImage.buffer, outputBuffer.buffer);
+          debugPrint('OutputBuffer: ${outputBuffer.getDoubleList()}');
 
-        // PostProcess data
-        List<ClassifierCategory> listData =
-            prov.postProcessOutput(outputBuffer);
+          // PostProcess data
+          List<ClassifierCategory> listData =
+              prov.postProcessOutput(outputBuffer);
 
-        // Predict
-        ClassifierCategory topResult =
-            prov.predict(inputImage, model, listData);
+          // Predict
+          ClassifierCategory topResult =
+              prov.predict(inputImage, model, listData);
 
-        if (!mounted) return;
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) =>
-                DiseaseScreen(path: path, predictData: topResult),
-          ),
-        );
-      }
-    });
+          await Provider.of<DiseaseProvider>(context, listen: false)
+              .validateDisease(topResult.label)
+              .then(
+                (value) => {
+                  if (value.name != null)
+                    {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              DiseaseScreen(path: path, predictData: value),
+                        ),
+                      ),
+                    }
+                },
+              );
+        }
+      },
+    );
   }
 
   Future<String> pickImage({required ImageSource? imageSource}) async {

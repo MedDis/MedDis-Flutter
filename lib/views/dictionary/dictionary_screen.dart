@@ -34,7 +34,7 @@ class DictionaryScreen extends StatelessWidget {
               height: 18,
             ),
             const Text(
-              "Jenis",
+              "Type",
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w700,

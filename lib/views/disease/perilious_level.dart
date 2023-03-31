@@ -1,8 +1,13 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class PeriliousLevel extends StatelessWidget {
-  const PeriliousLevel({super.key});
+  const PeriliousLevel({
+    Key? key,
+    required this.preliousLevel,
+  }) : super(key: key);
+  final String preliousLevel;
 
   @override
   Widget build(BuildContext context) {
@@ -19,15 +24,19 @@ class PeriliousLevel extends StatelessWidget {
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
+                children: [
+                  const Text(
                     "Perilious Level :",
                     style: TextStyle(color: Colors.black),
                   ),
                   Text(
-                    "Severe",
+                    preliousLevel,
                     style: TextStyle(
-                      color: Colors.red,
+                      color: preliousLevel == "Severe"
+                          ? Colors.red
+                          : preliousLevel == "Moderate"
+                              ? Colors.yellow
+                              : Colors.green,
                       fontWeight: FontWeight.w700,
                       fontSize: 18,
                     ),
@@ -72,9 +81,13 @@ class PeriliousLevel extends StatelessWidget {
                       ],
                       interval: 20,
                       canScaleToFit: true,
-                      pointers: const <GaugePointer>[
+                      pointers: <GaugePointer>[
                         NeedlePointer(
-                          value: 125,
+                          value: preliousLevel == "Severe"
+                              ? 125
+                              : preliousLevel == "Moderate"
+                                  ? 75
+                                  : 25,
                           needleStartWidth: 0.2,
                           needleEndWidth: 1.6,
                           needleLength: 0.6,

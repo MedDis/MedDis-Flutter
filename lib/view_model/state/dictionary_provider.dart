@@ -3,20 +3,20 @@ import 'package:flutter/material.dart';
 class DictionaryProvider with ChangeNotifier {
   final List<Map<String, String>> drugs = [
     {
-      "title": "Obat",
-      "asset": "assets/images/bottle_drugs.png",
+      "title": "Drug",
+      "asset": "assets/images/drug.png",
     },
     {
-      "title": "Komposisi",
-      "asset": "assets/images/bottle_drugs.png",
+      "title": "Composition",
+      "asset": "assets/images/drug_composition.png",
     },
     {
       "title": "Penyakit",
-      "asset": "assets/images/bottle_drugs.png",
+      "asset": "assets/images/disease.png",
     },
     {
       "title": "Singkatan",
-      "asset": "assets/images/bottle_drugs.png",
+      "asset": "assets/images/abbreviation.png",
     },
   ];
 }

@@ -26,7 +26,10 @@ class CustomCardDrugs extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => DrugsView(id: id),
+                  builder: (context) => DrugsView(
+                    id: id,
+                    name: title,
+                  ),
                 ),
               );
             },

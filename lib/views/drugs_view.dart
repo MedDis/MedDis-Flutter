@@ -5,8 +5,10 @@ import 'package:provider/provider.dart';
 import '../view_model/state/drugs_state.dart';
 
 class DrugsView extends StatefulWidget {
-  const DrugsView({Key? key, required this.id}) : super(key: key);
+  const DrugsView({Key? key, required this.id, required this.name})
+      : super(key: key);
   final int id;
+  final String name;
 
   @override
   State<DrugsView> createState() => _DrugsViewState();
@@ -23,17 +25,92 @@ class _DrugsViewState extends State<DrugsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.name),
+      ),
+      backgroundColor: Colors.white,
       body: Consumer<DrugsProvider>(
         builder: (context, value, child) {
           if (value.drugsState == StateAction.hasData) {
-            return Column(
-              children: [
-                Text(value.data!.name),
-                Text("======="),
-                Text(value.data!.desc),
-                Text("======="),
-                Text(value.data!.dosage),
-              ],
+            return SingleChildScrollView(
+              child: Container(
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 18,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Drugs Description',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 6,
+                    ),
+                    Text(value.data!.desc),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    const Text(
+                      'Dosage',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 6,
+                    ),
+                    Text(value.data!.dosage),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    const Text(
+                      'Drug Composition',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 6,
+                    ),
+                    Text(value.data!.composition),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    const Text(
+                      'Drug Indication',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 6,
+                    ),
+                    Text(value.data!.indication),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    const Text(
+                      'Drug Effect',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 6,
+                    ),
+                    Text(value.data!.effect),
+                  ],
+                ),
+              ),
             );
           } else if (value.drugsState == StateAction.loading) {
             return const Center(

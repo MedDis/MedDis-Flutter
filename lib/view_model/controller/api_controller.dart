@@ -28,4 +28,23 @@ class ApiHandler {
 
     return dataNewsItems;
   }
+
+  static Future<Drugs> getDrugsProductByID(int id) async {
+    final Uri url = Uri.parse('$baseUrl/drugs/$id/products');
+
+    bool error = false;
+    Map<String, dynamic>? jsonResponse;
+    Drugs? dataNewsItems;
+
+    try {
+      final response = await http.get(url);
+      jsonResponse = jsonDecode(response.body);
+
+      dataNewsItems = Drugs.fromJson(jsonResponse!['Data'][0]);
+    } on Exception catch (e) {
+      error = true;
+    }
+
+    return dataNewsItems!;
+  }
 }

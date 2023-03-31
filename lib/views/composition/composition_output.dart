@@ -36,6 +36,7 @@ class CompositionOutput extends StatelessWidget {
                       prov.processedData.length,
                       (index) => CustomCardDrugs(
                         title: prov.processedData[index] ?? "Empty",
+                        id: 0,
                       ),
                     ),
                   ),

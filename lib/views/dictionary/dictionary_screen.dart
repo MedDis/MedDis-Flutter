@@ -94,7 +94,8 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
                     return ListView.builder(
                       itemCount: value.data.length,
                       itemBuilder: (context, index) => CustomCardDrugs(
-                        title: value.data[index].name!,
+                        title: value.data[index].name ?? '',
+                        id: value.data[index].id!,
                       ),
                     );
                   } else if (value.drugsProductState == StateAction.loading) {

@@ -17,8 +17,8 @@ class DrugsProductProvider with ChangeNotifier {
 
     try {
       final result = await ApiHandler.getAllDrugsProduct(1);
-      print(result);
-      print("===== Disini");
+      // print(result);
+      // print("===== Disini");
 
       data.addAll(result);
       drugsProductState = StateAction.hasData;

@@ -7,6 +7,7 @@ import 'package:gsc/view_model/state/composition_provider.dart';
 import 'package:gsc/view_model/state/dictionary_provider.dart';
 import 'package:gsc/view_model/state/disease_provider.dart';
 import 'package:gsc/view_model/state/drugs_product_state.dart';
+import 'package:gsc/view_model/state/drugs_state.dart';
 import 'package:gsc/view_model/state/home_provider.dart';
 import 'package:gsc/view_model/state/human_body_provider.dart';
 import 'package:gsc/view_model/state/main_provider.dart';
@@ -49,6 +50,9 @@ void main() async {
         ),
         ChangeNotifierProvider<DrugsProductProvider>(
           create: (context) => DrugsProductProvider(),
+        ),
+        ChangeNotifierProvider<DrugsProvider>(
+          create: (context) => DrugsProvider(),
         ),
       ],
       child: const MyApp(),

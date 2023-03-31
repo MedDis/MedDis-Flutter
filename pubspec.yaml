@@ -45,6 +45,7 @@ dependencies:
   provider: ^6.0.5
   swipeable_card_stack: ^0.0.5
   syncfusion_flutter_gauges: ^21.1.35
+  http: ^0.13.5
   tflite_flutter: ^0.9.0
   tflite_flutter_helper:
     git:
@@ -71,7 +72,7 @@ flutter:
     - assets/images/human_body/
     - assets/drugs.txt
     - assets/unnecessary_words.txt
-    - assets/skinDisease.tflite
+    - assets/skinDisease.tflitedemo@mail.com
     - assets/map_style.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

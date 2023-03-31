@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 enum StateAction {
   none,
+  hasData,
+  noData,
   loading,
   error,
 }

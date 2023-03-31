@@ -28,6 +28,7 @@ class AuthAccount extends StatelessWidget {
           // }
           return const MainScreen();
         } else if (snapshot.hasError) {
+          print("Error");
           return const Center(
             child: Text('Ada yang error!!'),
           );

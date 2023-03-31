@@ -6,6 +6,7 @@ import 'package:gsc/utils/finite_state.dart';
 class AuthProvider with ChangeNotifier, FiniteState {
   final googleSignIn = GoogleSignIn();
   String? _registerMessage;
+  String? loginMessage;
   UserCredential? user;
   User? userData;
   bool isNormalLogin = false;
@@ -46,7 +47,9 @@ class AuthProvider with ChangeNotifier, FiniteState {
       print("jalan");
       setStateAction(StateAction.none);
     } catch (e) {
-      setStateAction(StateAction.none);
+      print(e.toString());
+      loginMessage = e.toString();
+      setStateAction(StateAction.error);
     }
 
     notifyListeners();

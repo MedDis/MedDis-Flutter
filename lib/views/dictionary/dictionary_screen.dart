@@ -1,12 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:gsc/utils/finite_state.dart';
 import 'package:gsc/view_model/state/dictionary_provider.dart';
+import 'package:gsc/view_model/state/drugs_product_state.dart';
 import 'package:gsc/views/dictionary/custom_card_drugs.dart';
 import 'package:gsc/views/dictionary/custom_category.dart';
 import 'package:gsc/widgets/custom_search_bar.dart';
 import 'package:provider/provider.dart';
 
-class DictionaryScreen extends StatelessWidget {
+class DictionaryScreen extends StatefulWidget {
   const DictionaryScreen({super.key});
+
+  @override
+  State<DictionaryScreen> createState() => _DictionaryScreenState();
+}
+
+class _DictionaryScreenState extends State<DictionaryScreen> {
+  @override
+  void initState() {
+    Future.microtask(() =>
+        Provider.of<DrugsProductProvider>(context, listen: false)
+          ..fetchDrugsProductsData());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,46 +44,79 @@ class DictionaryScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const CustomSearchBar(),
-            const SizedBox(
-              height: 18,
-            ),
-            const Text(
-              "Type",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
+            const Flexible(flex: 0, child: const CustomSearchBar()),
+            const Flexible(
+              flex: 0,
+              child: SizedBox(
+                height: 18,
               ),
             ),
-            Container(
-              decoration: const BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(
-                  color: Colors.grey,
-                  width: 2,
-                )),
+            const Flexible(
+              flex: 0,
+              child: Text(
+                "Type",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
-              width: double.maxFinite,
-              height: size.height * 1 / 8,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: List.generate(
-                  prov.drugs.length,
-                  (index) => CustomCategory(
-                    title: prov.drugs[index]["title"]!,
-                    asset: prov.drugs[index]["asset"]!,
+            ),
+            Flexible(
+              flex: 0,
+              child: Container(
+                // decoration: const BoxDecoration(
+                //   border: Border(
+                //       bottom: BorderSide(
+                //     color: Colors.grey,
+                //     width: 2,
+                //   )),
+                // ),
+                width: double.maxFinite,
+                height: size.height * 1 / 8,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: List.generate(
+                    prov.drugs.length,
+                    (index) => CustomCategory(
+                      title: prov.drugs[index]["title"]!,
+                      asset: prov.drugs[index]["asset"]!,
+                    ),
                   ),
                 ),
               ),
             ),
-            Column(
-              children: List.generate(
-                4,
-                (index) => const CustomCardDrugs(
-                  title: "Abacavir",
-                ),
+            Expanded(
+              flex: 1,
+              child: Consumer<DrugsProductProvider>(
+                builder: (context, value, _) {
+                  print(value.drugsProductState);
+                  if (value.drugsProductState == StateAction.hasData) {
+                    return ListView.builder(
+                      itemCount: value.data.length,
+                      itemBuilder: (context, index) => CustomCardDrugs(
+                        title: value.data[index].name!,
+                      ),
+                    );
+                  } else if (value.drugsProductState == StateAction.loading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    return Center(
+                      child: Text(value.drugsProductMessage),
+                    );
+                  }
+                },
               ),
-            )
+            ),
+            // Column(
+            //   children: List.generate(
+            //     4,
+            //     (index) => const CustomCardDrugs(
+            //       title: "Abacavir",
+            //     ),
+            //   ),
+            // )
           ],
         ),
       ),

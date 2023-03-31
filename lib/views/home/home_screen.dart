@@ -172,16 +172,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     context: context,
                     items: List.generate(
                       3,
-                      (index) => InkWell(
-                        onTap: () =>
-                            Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => DoctorView(
-                            dataDoctor: prov.listDoctor[index],
-                          ),
-                        )),
-                        child: RecomendationDoctorCard(
-                          dataDoctor: prov.listDoctor[index],
-                        ),
+                      (index) => RecomendationDoctorCard(
+                        dataDoctor: prov.listDoctor[index],
                       ),
                     ),
                     cardHeightTopMul: 0.14,

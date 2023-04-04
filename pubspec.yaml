@@ -30,6 +30,7 @@ environment:
 dependencies:
   animations: ^2.0.7
   change_app_package_name: ^1.1.0
+  cloud_firestore: ^4.5.0
   cupertino_icons: ^1.0.2
   firebase_auth: ^4.3.0
   firebase_core: ^2.8.0
@@ -40,12 +41,12 @@ dependencies:
   google_maps_flutter: ^2.2.5
   google_mlkit_text_recognition: ^0.5.0
   google_sign_in: ^6.0.2
+  http: ^0.13.5
   image_cropper: ^3.0.1
   image_picker: ^0.8.7
   provider: ^6.0.5
   swipeable_card_stack: ^0.0.5
   syncfusion_flutter_gauges: ^21.1.35
-  http: ^0.13.5
   tflite_flutter: ^0.9.0
   tflite_flutter_helper:
     git:
@@ -72,7 +73,7 @@ flutter:
     - assets/images/human_body/
     - assets/drugs.txt
     - assets/unnecessary_words.txt
-    - assets/skinDisease.tflitedemo@mail.com
+    - assets/skinDisease.tflite
     - assets/map_style.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
+import 'package:gsc/models/skin_disease_model.dart';
+
 class ListDiseaseCard extends StatelessWidget {
-  const ListDiseaseCard({super.key});
+  const ListDiseaseCard({
+    Key? key,
+    required this.skinDiseaseModel,
+  }) : super(key: key);
+
+  final SkinDiseaseModel skinDiseaseModel;
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +17,7 @@ class ListDiseaseCard extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: Row(
         children: List.generate(
-          2,
+          skinDiseaseModel.imageList!.length,
           (index) => Row(
             children: [
               Card(
@@ -22,10 +29,10 @@ class ListDiseaseCard extends StatelessWidget {
                 child: Container(
                   height: size.height * 2 / 16,
                   width: size.width * 3.5 / 8,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     image: DecorationImage(
                       image: NetworkImage(
-                        "https://cdn.shopify.com/s/files/1/1282/4197/articles/urticaria_skin_834x.jpg?v=1651854304",
+                        skinDiseaseModel.imageList![index],
                       ),
                       fit: BoxFit.cover,
                     ),

@@ -24,21 +24,28 @@ class DoctorMap extends StatefulWidget {
 
 class _DoctorMapState extends State<DoctorMap> {
   bool? isIos;
+  LatLng initialLatLng = const LatLng(-6.372723619652904, 106.8296194806852);
 
   @override
   void initState() {
     if (Platform.isIOS) {
       isIos = true;
+    } else {
+      isIos = false;
     }
+    initialLatLng = LatLng(widget.dataDoctor.latitudeLongitude[0],
+        widget.dataDoctor.latitudeLongitude[1]);
+
     super.initState();
   }
 
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
+
+  // static final CameraPosition _kGooglePlex = CameraPosition(
+  //   target: initialLatLng,
+  //   zoom: 14.4746,
+  // );
 
   static const CameraPosition _kLake = CameraPosition(
       // bearing: 192.8334901395799,
@@ -48,22 +55,22 @@ class _DoctorMapState extends State<DoctorMap> {
 
   static const Marker _rsBundaMargonda = Marker(
     markerId: MarkerId("1"),
-    infoWindow: InfoWindow(title: "RSU Bunda Margonda"),
+    infoWindow: InfoWindow(title: "Bunda Margonda Hospital"),
     position: LatLng(-6.364940067121678, 106.83484805587089),
   );
   static const Marker _rsUniversitasIndonesia = Marker(
     markerId: MarkerId("2"),
-    infoWindow: InfoWindow(title: "RS Universitas Indonesia"),
+    infoWindow: InfoWindow(title: "Universitas Indonesia Hospital"),
     position: LatLng(-6.372723619652904, 106.8296194806852),
   );
   static const Marker _rsMitraKeluarga = Marker(
     markerId: MarkerId("3"),
-    infoWindow: InfoWindow(title: "RS Mitra Keluarga"),
+    infoWindow: InfoWindow(title: "Mitra Keluarga Hospital"),
     position: LatLng(-6.394156412420279, 106.82453855279957),
   );
   static const Marker _rsGrhaPermataIbu = Marker(
     markerId: MarkerId("4"),
-    infoWindow: InfoWindow(title: "RS Graha Permata Ibu"),
+    infoWindow: InfoWindow(title: "Graha Permata Ibu Hospital"),
     position: LatLng(-6.370069878608769, 106.81394761527515),
   );
 
@@ -102,7 +109,8 @@ class _DoctorMapState extends State<DoctorMap> {
             child: GoogleMap(
               myLocationEnabled: true,
               mapType: MapType.normal,
-              initialCameraPosition: _kGooglePlex,
+              initialCameraPosition:
+                  CameraPosition(target: initialLatLng, zoom: 16),
               indoorViewEnabled: true,
               zoomControlsEnabled: false,
               onMapCreated: (GoogleMapController controller) {
@@ -120,14 +128,14 @@ class _DoctorMapState extends State<DoctorMap> {
           RecomendationDoctorCard(dataDoctor: widget.dataDoctor)
         ],
       ),
-      floatingActionButton: Visibility(
-        visible: !isIos!,
-        child: FloatingActionButton.extended(
-          onPressed: _goToTheLake,
-          label: const Text('Current Location'),
-          icon: const Icon(Icons.location_history),
-        ),
-      ),
+      // floatingActionButton: Visibility(
+      //   visible: !isIos!,
+      //   child: FloatingActionButton.extended(
+      //     onPressed: _goToTheLake,
+      //     label: const Text('Current Location'),
+      //     icon: const Icon(Icons.location_history),
+      //   ),
+      // ),
     );
   }
 

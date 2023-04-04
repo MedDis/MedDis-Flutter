@@ -1,0 +1,166 @@
+{
+    "data": [
+        {
+            "name" : "Paracetamol",
+            "description" : "Paracetamol is a medicine to relieve fever and mild to moderate pain, such as headaches, menstrual pain, or aches. Paracetamol or acetaminophen is available as tablets, syrup, drops, suppositories and infusions.",
+            "benefits" : "Relieves fever and pain",
+            "sideEffects" : ["Right upper abdomen pain", "Dark-colored urine", "Pale or grayish stools", "Loss of appetite", "Unusually tired", "Penyakit kuning"],
+            "dosage" : [
+                {
+                    "ageCategory" : "Adults",
+                    "dosageDrug" : ["500 mg", "1000 mg"],
+                    "intervalUsage" : [],
+                    "intervalHours" : [4, 6],
+                    "maximumDosage" : "4000 mg"
+                },
+                {
+                    "ageCategory" : "12 Years and Above",
+                    "dosageDrug" : ["325 mg", "650 mg"],
+                    "intervalUsage" : [],
+                    "intervalHours" : [4, 6],
+                    "maximumDosage" : null
+                },
+                {
+                    "ageCategory" : "12 Years and Under",
+                    "dosageDrug" : ["120 mg", "500 mg"],
+                    "intervalUsage" : [],
+                    "intervalHours" : [4, 6],
+                    "maximumDosage" : null
+                },
+                {
+                    "ageCategory" : "Baby 1-2 months",
+                    "dosageDrug" : ["30 mg", "60 mg"],
+                    "intervalUsage" : [],
+                    "intervalHours" : [8, 8],
+                    "maximumDosage" : null
+                }
+
+            ],
+            "dangerousInteractions" : [
+                {
+                    "nameDrug" : "Warfarin",
+                    "reason" : ""
+                },
+                {
+                    "nameDrug" : "Carbamazepine",
+                    "reason" : "May decrease the effectiveness of Paracetamol"
+                },
+                {
+                    "nameDrug" : "Primidone, Phenytoin, Phenobarbital ",
+                    "reason" : "Can lower serum concentrations"
+                },
+                {
+                    "nameDrug" : "Metoclopramide",
+                    "reason" : "May increase the absorption of Paracetamol"
+                },
+                {
+                    "nameDrug" : "Cholestyramine",
+                    "reason" : "May decrease drug absorption"
+                }
+            ]
+        },
+        {
+            "name" : "Chlorpheniramine Maleate",
+            "description" : "Chlorpheniramine or CTM is a medication to relieve allergy symptoms that can be triggered by foods, medications, insect bites, or exposure to dust, animal dander, or pollen. CTM is also used to alleviate the symptoms of cough and cold (common cold).",
+            "benefits" : "Relieves symptoms of allergies, hay fever, and the common cold.",
+            "sideEffects" : ["Nausea","Vomiting","Dizziness","Headache","Drowsiness","Decreased appetite","Stomach pain","Constipation","Blurred vision","Dry mouth"],
+            "dosage" : [
+                {
+                    "ageCategory" : "Adults",
+                    "dosageDrug" : ["4 mg", "4 mg"],
+                    "intervalUsage" : [4, 6],
+                    "intervalHours" : [],
+                    "maximumDosage" : "24 mg"
+                },
+                {
+                    "ageCategory" : "6 - 12 Years",
+                    "dosageDrug" : ["2 mg", "2 mg"],
+                    "intervalUsage" : [4, 6],
+                    "intervalHours" : [],
+                    "maximumDosage" : "12 mg"
+                },
+                {
+                    "ageCategory" : "2 - 5 Years",
+                    "dosageDrug" : ["1 mg", "1 mg"],
+                    "intervalUsage" : [4, 6],
+                    "intervalHours" : [],
+                    "maximumDosage" : "6 mg"
+                },
+                {
+                    "ageCategory" : "1 - 2 Years",
+                    "dosageDrug" : ["1 mg", "1 mg"],
+                    "intervalUsage" : [2, 2],
+                    "intervalHours" : [],
+                    "maximumDosage" : "2 mg"
+                }
+
+            ],
+            "dangerousInteractions" : [
+                {
+                    "nameDrug" : "Alcohol",
+                    "reason" : ""
+                },
+                {
+                    "nameDrug" : "Depresan SSP",
+                    "reason" : ""
+                },
+                {
+                    "nameDrug" : "Antikolinergik",
+                    "reason" : ""
+                },
+                {
+                    "nameDrug" : "Metoclopramide",
+                    "reason" : ""
+                },
+                {
+                    "nameDrug" : "Monoamine Oxidase Inhibitor (MAOI)",
+                    "reason" : ""
+                }
+            ]
+        },
+        {
+            "name" : "Phenylpropanolamine HCL",
+            "description" : "Phenylpropanolamine or phenylpropanolamine hcl is a medication to relieve nasal congestion due to a cold, cough, allergies, or sinus inflammation (sinusitis). Phenylpropanolamine can be found in combination with other medications.",
+            "benefits" : "Relieves symptoms of nasal congestion",
+            "sideEffects" : ["Dizziness", "Mild headache", "Sleepiness", "Dry mouth", "Nausea and vomiting", "Excessive sweating", "Insomnia", "Restlessness", "Tremor"],
+            "dosage" : [
+                {
+                    "ageCategory" : "Adults",
+                    "dosageDrug" : ["1 caplet", "2 caplets"],
+                    "intervalUsage" : [4, 4],
+                    "intervalHours" : [],
+                    "maximumDosage" : "8 caplet"
+                },
+                {
+                    "ageCategory" : "6 - 12 Years",
+                    "dosageDrug" : ["1 caplet", "1 caplet"],
+                    "intervalUsage" : [4, 4],
+                    "intervalHours" : [],
+                    "maximumDosage" : "4 caplet"
+                }
+            ],
+            "dangerousInteractions" : [
+                {
+                    "nameDrug" : "Bromocriptine",
+                    "reason" : ""
+                },
+                {
+                    "nameDrug" : "Indomethacin",
+                    "reason" : ""
+                },
+                {
+                    "nameDrug" : "Monoamine Oxidase Inhibitor (MAOI)",
+                    "reason" : ""
+                },
+                {
+                    "nameDrug" : "Metoclopramide",
+                    "reason" : ""
+                },
+                {
+                    "nameDrug" : "Amantadine",
+                    "reason" : "Increased risk of psychosis"
+                }
+            ]
+        }
+    ]
+}

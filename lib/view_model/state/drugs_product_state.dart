@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:gsc/utils/finite_state.dart';
-import 'package:gsc/view_model/controller/api_controller.dart';
+import 'package:gsc/services/api_controller.dart';
 
 import '../../models/drugs_model.dart';
 

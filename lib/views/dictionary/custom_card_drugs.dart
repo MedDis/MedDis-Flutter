@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:gsc/views/drugs_view.dart';
+import 'package:gsc/views/drugs_view_after_scan.dart';
 
 class CustomCardDrugs extends StatelessWidget {
   const CustomCardDrugs({
@@ -23,17 +23,19 @@ class CustomCardDrugs extends StatelessWidget {
           color: Colors.white,
           child: InkWell(
             onTap: () {
+              print("id: $id");
+              print("title: $title");
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => DrugsView(
+                  builder: (context) => DrugsViewAfterScan(
                     id: id,
                     name: title,
                   ),
                 ),
               );
             },
-            child: Container(
+            child: SizedBox(
               // color: Colors.white,
               height: size.height * 2 / 32,
               width: double.maxFinite,

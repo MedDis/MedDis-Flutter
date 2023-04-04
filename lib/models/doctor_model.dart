@@ -5,6 +5,7 @@ class DoctorModel {
   String hospital;
   String experience;
   List<double> latitudeLongitude;
+  int patients;
   DoctorModel({
     required this.name,
     required this.image,
@@ -12,5 +13,6 @@ class DoctorModel {
     required this.hospital,
     required this.experience,
     required this.latitudeLongitude,
+    required this.patients,
   });
 }

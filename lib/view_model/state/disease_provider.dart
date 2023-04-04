@@ -9,39 +9,43 @@ class DiseaseProvider with ChangeNotifier, FiniteState {
 
   List<DoctorModel> listDoctor = [
     DoctorModel(
-      name: "Dr. Rayhan Sp.KK",
+      name: "dr. Rayhan, Sp.KK",
       specialist: "Dermatologist",
       image:
           "https://pbs.twimg.com/profile_images/759087511356313604/OJ0w7WIS_400x400.jpg",
-      hospital: "RSU Bunda Margonda",
+      hospital: "Bunda Margonda Hospital",
       latitudeLongitude: [-6.364940067121678, 106.83484805587089],
+      patients: 224,
       experience: "4 Years",
     ),
     DoctorModel(
-      name: "Dr. Rasyid Sp.KK",
+      name: "dr. Rasyid, Sp.KK",
       specialist: "Dermatologist",
       image:
           "https://famoushospital.com/wp-content/uploads/2019/05/doctor2.jpg",
       latitudeLongitude: [-6.372723619652904, 106.8296194806852],
-      hospital: "RS. Universitas Indonesia",
+      hospital: "Universitas Indonesia Hospital",
+      patients: 67,
       experience: "1 Year",
     ),
     DoctorModel(
-      name: "Dr. Sapta Sp.DK",
+      name: "dr. Sapta, Sp.KK",
       specialist: "Dermatologist",
       image:
           "https://teleradfoundation.org/wp-content/uploads/2022/05/sadiq.jpg",
       latitudeLongitude: [-6.394156412420279, 106.82453855279957],
-      hospital: "RS Mitra Keluarga",
+      hospital: "Mitra Keluarga Hospital",
+      patients: 42,
       experience: "2 Years",
     ),
     DoctorModel(
-      name: "Dr. Dwi Sp.DK",
+      name: "dr. Dwi, Sp.KK",
       specialist: "General Practicioner",
       image:
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRs7_4XHe7wQ3MFPMBORzHGN-Ib7NlLr5JxbMb_hNBRKBr_oUtwFmBAY-Sr9E774v1K8yA&usqp=CAU",
       latitudeLongitude: [-6.370069878608769, 106.81394761527515],
-      hospital: "RS Graha Permata Ibu",
+      hospital: "Graha Permata Ibu Hospital",
+      patients: 67,
       experience: "3 Years",
     ),
   ];
@@ -57,6 +61,7 @@ class DiseaseProvider with ChangeNotifier, FiniteState {
           "Mild hives will usually resolve without treatment. However, recurrent hives need to be treated with prescribed medications, such as antihistamines or corticosteroids. Avoiding heat, stress, drugs or food is an effective way to prevent hives. These foods or drugs can be avoided after being confirmed by the doctor as the cause of hives in the patient.",
       imageList: [
         "https://cdn.shopify.com/s/files/1/1282/4197/articles/urticaria_skin_834x.jpg?v=1651854304",
+        "https://santripty.com/wp-content/uploads/2022/02/images-2022-02-03T054338.256.jpeg"
       ],
       isCancer: false,
       periliousLevel: "Mild",
@@ -67,7 +72,7 @@ class DiseaseProvider with ChangeNotifier, FiniteState {
           "Ringworm is a fungal infection of the skin that causes a red circular rash. Ringworm can occur in several areas of the body, such as the head, face, hands, feet or groin. Fungi are organisms that can live in various places, including the human body. Some fungi are harmless to humans, but others can be dangerous if they grow and develop in the human body quickly.",
       imageList: [
         "https://cdn.shopify.com/s/files/1/1282/4197/articles/urticaria_skin_834x.jpg?v=1651854304",
-        ""
+        "https://santripty.com/wp-content/uploads/2022/02/images-2022-02-03T054338.256.jpeg"
       ],
       isCancer: false,
       periliousLevel: "Mild",

@@ -8,6 +8,7 @@ import 'package:gsc/view_model/state/disease_provider.dart';
 import 'package:gsc/views/disease/list_disease_card.dart';
 import 'package:gsc/views/disease/perilious_level.dart';
 import 'package:gsc/views/disease/recomendation_doctor_card.dart';
+import 'package:gsc/views/doctor/doctor_view.dart';
 import 'package:provider/provider.dart';
 
 class DiseaseScreen extends StatefulWidget {
@@ -115,7 +116,9 @@ class _DiseaseScreenState extends State<DiseaseScreen> {
                       const SizedBox(
                         height: 20,
                       ),
-                      const ListDiseaseCard(),
+                      ListDiseaseCard(
+                        skinDiseaseModel: widget.predictData,
+                      ),
                       // const SizedBox(
                       //   height: 20,
                       // ),
@@ -150,23 +153,6 @@ class _DiseaseScreenState extends State<DiseaseScreen> {
               const SizedBox(
                 height: 4,
               ),
-              // Card(
-              //   clipBehavior: Clip.antiAliasWithSaveLayer,
-              //   child: Container(
-              //     padding: const EdgeInsets.all(20),
-              //     color: Colors.white,
-              //     child: Column(
-              //       crossAxisAlignment: CrossAxisAlignment.start,
-              //       children: const [
-              //         Text("Penyebab :"),
-              //         Text(
-              //           "Munculnya bilur pada kulit ini dipicu oleh tingginya kadar histamin yang dilepaskan ke kulit.Tubuh menyimpan histamin di dalam sel. Ketika sistem kekebalan mengenali ancaman, ia akan melepaskan histamin dan bahan kimia lainnya. Rangkaian bahan kimia ini bisa melindungi kamu dari penyakit serius akibat infeksi atau gigitan serangga. Namun, terkadang, sistem kekebalan melepaskan histamin ketika tidak ada ancaman nyata. Hal ini terjadi ketika,",
-              //           textAlign: TextAlign.justify,
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // ),
               const SizedBox(
                 height: 20,
               ),
@@ -181,8 +167,17 @@ class _DiseaseScreenState extends State<DiseaseScreen> {
                 return Column(
                   children: List.generate(
                     3,
-                    (index) => RecomendationDoctorCard(
-                      dataDoctor: data.listDoctor[index],
+                    (index) => InkWell(
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => DoctorView(
+                            dataDoctor: prov.listDoctor[index],
+                          ),
+                        ),
+                      ),
+                      child: RecomendationDoctorCard(
+                        dataDoctor: data.listDoctor[index],
+                      ),
                     ),
                   ),
                 );

@@ -172,8 +172,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     context: context,
                     items: List.generate(
                       3,
-                      (index) => RecomendationDoctorCard(
-                        dataDoctor: prov.listDoctor[index],
+                      (index) => InkWell(
+                        onTap: () =>
+                            Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => DoctorView(
+                            dataDoctor: prov.listDoctor[index],
+                          ),
+                        )),
+                        child: RecomendationDoctorCard(
+                          dataDoctor: prov.listDoctor[index],
+                        ),
                       ),
                     ),
                     cardHeightTopMul: 0.14,
@@ -201,7 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: size.width * 1 / 16),
               child: const Text(
-                "Menu",
+                "Menus",
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,

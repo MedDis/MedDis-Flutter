@@ -96,14 +96,14 @@ class DoctorView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Column(
-                      children: const [
-                        Text(
+                      children: [
+                        const Text(
                           "Patientis",
                           style: TextStyle(color: Colors.white),
                         ),
                         Text(
-                          "265",
-                          style: TextStyle(
+                          dataDoctor.patients.toString(),
+                          style: const TextStyle(
                               color: Colors.white,
                               fontSize: 16,
                               fontWeight: FontWeight.w600),
@@ -115,14 +115,14 @@ class DoctorView extends StatelessWidget {
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
-                        Text(
+                      children: [
+                        const Text(
                           "Experience",
                           style: TextStyle(color: Colors.white),
                         ),
                         Text(
-                          "7 Years",
-                          style: TextStyle(
+                          dataDoctor.experience,
+                          style: const TextStyle(
                               color: Colors.white,
                               fontSize: 16,
                               fontWeight: FontWeight.w600),
@@ -168,9 +168,9 @@ class DoctorView extends StatelessWidget {
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
-                          image: const DecorationImage(
+                          image: DecorationImage(
                             image: NetworkImage(
-                                "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/106.82453855279957,-6.394156412420279,16.91,0/300x200?access_token=pk.eyJ1IjoiLWh2LSIsImEiOiJja2hwcGt1MzgwMHg1MnJvNTA5OWVoYXk0In0.Az6kzTuvhoGHnCsIL74trQ"),
+                                "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/${dataDoctor.latitudeLongitude[1]},${dataDoctor.latitudeLongitude[0]},16.91,0/300x200?access_token=pk.eyJ1IjoiLWh2LSIsImEiOiJja2hwcGt1MzgwMHg1MnJvNTA5OWVoYXk0In0.Az6kzTuvhoGHnCsIL74trQ"),
                             fit: BoxFit.cover,
                           ),
                         ),
